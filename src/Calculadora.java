@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.util.Arrays;
 import javax.swing.border.LineBorder;
 
-
 public class Calculadora {
     int boardWidth = 440;
     int boardHeight = 540;
@@ -15,20 +14,19 @@ public class Calculadora {
     Color customGreen = new Color(255, 188, 0);
 
     String[] buttonsValues = {
-        "C", "+/-", "%", "÷",
-        "7", "8", "9", "×",
-        "4", "5", "6", "-",
-        "1", "2", "3", "+",
-        "0", ".", "√","="
+            "C", "+/-", "%", "÷",
+            "7", "8", "9", "×",
+            "4", "5", "6", "-",
+            "1", "2", "3", "+",
+            "0", ".", "√", "="
     };
-    String[] operators = {"+", "-", "×", "÷", "="};
-    String[] topSymbols = {"C", "+/-", "%"};
+    String[] operators = { "+", "-", "×", "÷", "=" };
+    String[] topSymbols = { "C", "+/-", "%" };
 
     JFrame frame = new JFrame("Calculadora Java");
     JLabel displayLabel = new JLabel();
     JPanel displayPanel = new JPanel();
     JPanel buttonsPanel = new JPanel();
-
 
     Calculadora() {
         frame.setVisible(true);
@@ -53,26 +51,40 @@ public class Calculadora {
         buttonsPanel.setBackground(customDark);
         frame.add(buttonsPanel);
 
-        for(int i = 0; i < buttonsValues.length; i++) {
+        for (int i = 0; i < buttonsValues.length; i++) {
             JButton button = new JButton();
             String buttonValue = buttonsValues[i];
             button.setFont(new Font("arial", Font.PLAIN, 30));
             button.setText(buttonValue);
             button.setFocusable(false);
+            // button.setBorder(new LineBorder(Color.BLACK, 1));
             if (Arrays.asList(topSymbols).contains(buttonValue)) {
                 button.setBackground(customLightGray);
                 button.setForeground(customDark);
             } else if (Arrays.asList(operators).contains(buttonValue)) {
                 button.setBackground(customGreen);
                 button.setForeground(Color.WHITE);
-                
-            }else {
+
+            } else {
                 button.setBackground(customDarkGray);
                 button.setForeground(Color.WHITE);
             }
             buttonsPanel.add(button);
-                }
-          
 
+            button.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    JButton button = (JButton) e.getSource();
+                    String buttonValue = button.getText();
+                    if (Arrays.asList(operators).contains(buttonValue)) {
+
+                    } else if (Arrays.asList(topSymbols).contains(buttonValue)) {
+
+                    } else {
+
+                    }
+                }
+            });
+        }
+        ;
     }
 }
