@@ -78,8 +78,28 @@ public class Calculadora {
                     if (Arrays.asList(operators).contains(buttonValue)) {
 
                     } else if (Arrays.asList(topSymbols).contains(buttonValue)) {
+                        if (buttonValue == "C") { 
 
+                        } else if ( buttonValue == "+/-") {
+
+                        }
+                        else if (buttonValue == "%") {
+
+                        }
                     } else {
+                        if (buttonValue == ".") {
+                            if (!displayLabel.getText().contains(buttonValue)){
+                                displayLabel.setText(displayLabel.getText() + buttonValue);
+                            }
+                        }
+                        else if ("0123456789".contains(buttonValue)){
+                           if( displayLabel.getText() == "0") {
+                                displayLabel.setText(buttonValue);
+                           }
+                           else {
+                            displayLabel.setText(displayLabel.getText() + buttonValue);
+                           }
+                        }
 
                     }
                 }
