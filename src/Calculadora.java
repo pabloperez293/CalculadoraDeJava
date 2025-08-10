@@ -28,6 +28,12 @@ public class Calculadora {
     JPanel displayPanel = new JPanel();
     JPanel buttonsPanel = new JPanel();
 
+    // Representation  a+b, a-b,etc..
+    String A = "0";
+    String operator = null;
+    String B = null;
+
+
     Calculadora() {
         frame.setVisible(true);
         frame.setSize(boardWidth, boardHeight);
@@ -79,6 +85,7 @@ public class Calculadora {
 
                     } else if (Arrays.asList(topSymbols).contains(buttonValue)) {
                         if (buttonValue == "C") { 
+
 
                         } else if ( buttonValue == "+/-") {
 
