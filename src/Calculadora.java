@@ -81,33 +81,99 @@ public class Calculadora {
                 public void actionPerformed(ActionEvent e) {
                     JButton button = (JButton) e.getSource();
                     String buttonValue = button.getText();
+
+                    // Si es operador
                     if (Arrays.asList(operators).contains(buttonValue)) {
+                        if (operator == null) {
+                            operator = buttonValue.equals("=") ? null : buttonValue;
+                            A = displayLabel.getText();
+                            displayLabel.setText("0");
+                        } else {
+                            B = displayLabel.getText();
+                            double resultado = 0;
+                            double a = Double.parseDouble(A);
+                            double b = Double.parseDouble(B);
 
-                    } else if (Arrays.asList(topSymbols).contains(buttonValue)) {
-                        if (buttonValue == "C") { 
-
-
-                        } else if ( buttonValue == "+/-") {
-
+                            switch (operator) {
+                                case "+":
+                                    resultado = a + b;
+                                    break;
+                                case "-":
+                                    resultado = a - b;
+                                    break;
+                                case "×":
+                                    resultado = a * b;
+                                    break;
+                                case "÷":
+                                    if (b == 0) {
+                                        displayLabel.setText("Error");
+                                        operator = null;
+                                        return;
+                                    }
+                                    resultado = a / b;
+                                    break;
+                            }
+                            displayLabel.setText(String.valueOf(resultado).replaceAll("\\.0$", ""));
+                            operator = buttonValue.equals("=") ? null : buttonValue;
+                            A = String.valueOf(resultado);
+                            B = null;
                         }
-                        else if (buttonValue == "%") {
-
+                    }
+                    // Funciones especiales
+                    else if (Arrays.asList(topSymbols).contains(buttonValue)) {
+                        if (buttonValue.equals("C")) {
+                            displayLabel.setText("0");
+                            A = "0";
+                            operator = null;
+                            B = null;
+                        } else if (buttonValue.equals("+/-")) {
+                            String valor = displayLabel.getText();
+                            if (!valor.equals("0") && !valor.equals("Error")) {
+                                if (valor.startsWith("-")) {
+                                    displayLabel.setText(valor.substring(1));
+                                } else {
+                                    displayLabel.setText("-" + valor);
+                                }
+                            }
+                        } else if (buttonValue.equals("%")) {
+                            String valor = displayLabel.getText();
+                            try {
+                                double num = Double.parseDouble(valor);
+                                num = num / 100;
+                                displayLabel.setText(String.valueOf(num).replaceAll("\\.0$", ""));
+                            } catch (Exception ex) {
+                                displayLabel.setText("Error");
+                            }
                         }
-                    } else {
-                        if (buttonValue == ".") {
-                            if (!displayLabel.getText().contains(buttonValue)){
+                    }
+                    // Raíz cuadrada
+                    else if (buttonValue.equals("√")) {
+                        String valor = displayLabel.getText();
+                        try {
+                            double num = Double.parseDouble(valor);
+                            if (num < 0) {
+                                displayLabel.setText("Error");
+                            } else {
+                                double resultado = Math.sqrt(num);
+                                displayLabel.setText(String.valueOf(resultado).replaceAll("\\.0$", ""));
+                            }
+                        } catch (Exception ex) {
+                            displayLabel.setText("Error");
+                        }
+                    }
+                    // Números y punto decimal
+                    else {
+                        if (buttonValue.equals(".")) {
+                            if (!displayLabel.getText().contains(".")) {
+                                displayLabel.setText(displayLabel.getText() + ".");
+                            }
+                        } else if ("0123456789".contains(buttonValue)) {
+                            if (displayLabel.getText().equals("0") || displayLabel.getText().equals("Error")) {
+                                displayLabel.setText(buttonValue);
+                            } else {
                                 displayLabel.setText(displayLabel.getText() + buttonValue);
                             }
                         }
-                        else if ("0123456789".contains(buttonValue)){
-                           if( displayLabel.getText() == "0") {
-                                displayLabel.setText(buttonValue);
-                           }
-                           else {
-                            displayLabel.setText(displayLabel.getText() + buttonValue);
-                           }
-                        }
-
                     }
                 }
             });
